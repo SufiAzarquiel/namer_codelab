@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,12 +28,17 @@ class MyApp extends StatelessWidget {
 }
 
 class MyAppState extends ChangeNotifier {
+
+  // initialize word pair
   var currentWordPair = WordPair.random();
+
+  // generate new random word pair
   void getNextWordPair() {
     currentWordPair = WordPair.random();
     notifyListeners();
   }
 
+  // add or remove word pair from favorites list
   var favorites = <WordPair>{}; // Use set -> no need to use index
   void toggleFavorite() {
     if (favorites.contains(currentWordPair)) {
@@ -41,19 +48,18 @@ class MyAppState extends ChangeNotifier {
     }
     notifyListeners();
   }
-
-  var navIndex = 0;
-  void updateIndex(value) {
-    navIndex = value;
-    notifyListeners();
-  }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-    var navIndex = appState.navIndex;
+    // position within the nav rail -> State
+    var navIndex = 0;
 
     return Scaffold(
       body: Row(
@@ -72,8 +78,11 @@ class MyHomePage extends StatelessWidget {
                 ),
               ],
               selectedIndex: navIndex,
-              onDestinationSelected: (value) {
-                appState.updateIndex(value);
+              onDestinationSelected: (destinationValue) {
+                setState(() {
+                  navIndex = destinationValue;
+                });
+                stdout.writeln("current nav item $destinationValue");
               },
             ),
           ),
