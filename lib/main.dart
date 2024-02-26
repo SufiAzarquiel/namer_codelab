@@ -48,6 +48,12 @@ class MyAppState extends ChangeNotifier {
     }
     notifyListeners();
   }
+  void removeFromFav(WordPair wordPair) {
+    if (favorites.contains(wordPair)) {
+      favorites.remove(wordPair);
+    }
+    notifyListeners();
+  }
 }
 
 class MyHomePage extends StatefulWidget {
@@ -199,6 +205,7 @@ class FavoritesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
+    var removeFromFav = appState.removeFromFav;
     var favList = appState.favorites;
 
     final theme = Theme.of(context); // get theme from context
@@ -234,10 +241,7 @@ class FavoritesPage extends StatelessWidget {
                       size: 30.0,
                       color: theme.colorScheme.tertiaryContainer,
                     ),
-                    onTap: () {
-                      favList.remove(wordPair);
-                      appState.notifyListeners();
-                    }
+                    onTap: () => removeFromFav(wordPair)
                 ),
               )
           ).toList()
