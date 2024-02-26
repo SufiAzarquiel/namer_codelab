@@ -207,7 +207,10 @@ class FavoritesPage extends StatelessWidget {
             ListTile(
               title: Text(wordPair.asLowerCase),
               leading: Icon(Icons.favorite),
-              onTap: () => favList.remove(wordPair),
+              onTap: () {
+                favList.remove(wordPair);
+                appState.notifyListeners();
+              }
             )
           ).toList()
       ),
