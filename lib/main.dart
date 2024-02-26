@@ -79,7 +79,7 @@ class MyHomePage extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              color: Theme.of(context).colorScheme.primaryContainer,
+              color: Theme.of(context).colorScheme.tertiaryContainer,
               child: GeneratorPage(),
             ),
           ),
@@ -97,28 +97,12 @@ class GeneratorPage extends StatelessWidget {
     var getNextWordPair = appState.getNextWordPair;
 
     var toggleFavorite = appState.toggleFavorite;
-    var theme = Theme.of(context);
-    // change fav btn style if its in favourites list
     IconData icon;
     ButtonStyle favBtnStyle;
     if (appState.favorites.contains(pair)) {
       icon = Icons.favorite;
-      favBtnStyle = ElevatedButton.styleFrom(
-        foregroundColor: theme.colorScheme.onTertiary,
-        backgroundColor: theme.colorScheme.tertiary,
-        textStyle: theme.textTheme.bodyMedium!.copyWith(
-          color: theme.colorScheme.onTertiary,
-        ),
-      );
     } else {
       icon = Icons.favorite_border;
-      favBtnStyle = ElevatedButton.styleFrom(
-        foregroundColor: theme.colorScheme.onPrimary,
-        backgroundColor: theme.colorScheme.primary,
-        textStyle: theme.textTheme.bodyMedium!.copyWith(
-          color: theme.colorScheme.onPrimary,
-        ),
-      );
     }
 
     return Center(
@@ -131,7 +115,6 @@ class GeneratorPage extends StatelessWidget {
           ),
           SizedBox(height: 10), // Works as a margin/separator
           ElevatedButton.icon(
-            style: favBtnStyle,
             onPressed: toggleFavorite,
             icon: Icon(icon),
             label: Text('Like'),
@@ -157,13 +140,13 @@ class WordPairCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context); // get theme from context
 
-    final styleBtnText = theme.textTheme.displayMedium!.copyWith(
-      color: theme.colorScheme.onSecondary,
+    final styleBtnText = theme.textTheme.displaySmall!.copyWith(
+      color: theme.colorScheme.onPrimary,
     );
 
     final styleBtn = ElevatedButton.styleFrom(
-      foregroundColor: theme.colorScheme.onSecondary,
-      backgroundColor: theme.colorScheme.secondary,
+      foregroundColor: theme.colorScheme.onPrimary,
+      backgroundColor: theme.colorScheme.primary,
       textStyle: styleBtnText,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
