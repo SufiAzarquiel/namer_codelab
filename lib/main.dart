@@ -107,7 +107,6 @@ class GeneratorPage extends StatelessWidget {
 
     var toggleFavorite = appState.toggleFavorite;
     IconData icon;
-    ButtonStyle favBtnStyle;
     if (appState.favorites.contains(pair)) {
       icon = Icons.favorite;
     } else {
