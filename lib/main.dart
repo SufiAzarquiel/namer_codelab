@@ -200,19 +200,48 @@ class FavoritesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     var favList = appState.favorites;
+
+    final theme = Theme.of(context); // get theme from context
+
+    final styleTextHeader = theme.textTheme.headlineMedium!.copyWith(
+      color: theme.colorScheme.onTertiaryContainer,
+    );
+
+    final styleTextListTile = theme.textTheme.bodyLarge!.copyWith(
+      color: theme.colorScheme.tertiaryContainer,
+    );
+
     return Center(
       child: ListView(
-        children:
-          favList.map((wordPair) =>
-            ListTile(
-              title: Text(wordPair.asLowerCase),
-              leading: Icon(Icons.favorite),
-              onTap: () {
-                favList.remove(wordPair);
-                appState.notifyListeners();
-              }
-            )
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Text(
+                'You have ${appState.favorites.length} favorites:',
+                style: styleTextHeader,
+            ),
+          ),
+          ...favList.map((wordPair) =>
+              Container(
+                color: theme.colorScheme.onTertiaryContainer,
+                child: ListTile(
+                    title: Text(
+                      wordPair.asLowerCase,
+                      style: styleTextListTile,
+                    ),
+                    leading: Icon(
+                        Icons.favorite,
+                      size: 30.0,
+                      color: theme.colorScheme.tertiaryContainer,
+                    ),
+                    onTap: () {
+                      favList.remove(wordPair);
+                      appState.notifyListeners();
+                    }
+                ),
+              )
           ).toList()
+        ]
       ),
     );
   }
