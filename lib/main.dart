@@ -194,3 +194,17 @@ class WordPairCard extends StatelessWidget {
     );
   }
 }
+
+class FavoritesPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+
+    return Center(
+      child: ListView(
+        children: [
+
+        ],
+      ),
+    );
+  }
+}
